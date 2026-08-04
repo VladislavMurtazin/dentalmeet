@@ -1,6 +1,6 @@
 import {
+  CONTACT_EMAIL_COMPOSE_URL,
   CONTACT_EMAIL_DISPLAY,
-  CONTACT_EMAIL_MAILTO,
   LINKEDIN_URL,
 } from "@/lib/constants";
 
@@ -14,7 +14,9 @@ export default function Footer() {
 
         <div className="flex flex-col items-center gap-4 sm:flex-row sm:gap-6">
           <a
-            href={`mailto:${CONTACT_EMAIL_MAILTO}`}
+            href={CONTACT_EMAIL_COMPOSE_URL}
+            target="_blank"
+            rel="noopener noreferrer"
             className="text-sm font-medium text-gray-600 transition-colors duration-200 hover:text-accent"
           >
             {CONTACT_EMAIL_DISPLAY}
