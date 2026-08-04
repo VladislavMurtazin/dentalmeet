@@ -1,7 +1,16 @@
 export const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL ?? "https://dentalmeet.com";
 
-export const CALENDLY_URL = "https://calendly.com/YOUR-LINK";
+export const CALENDLY_URL =
+  "https://calendly.com/dentalmeet-agency/new-meeting";
+
+export const CONTACT_EMAIL_DISPLAY = "hello@dentalmeet.agency";
+
+export const CONTACT_EMAIL_MAILTO = "dentalmeet.agency@gmail.com";
+
+export const CONTACT_EMAIL_COMPOSE_URL = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(CONTACT_EMAIL_MAILTO)}&su=${encodeURIComponent("DentalMeet inquiry")}`;
+
+export const LINKEDIN_URL = "https://www.linkedin.com/in/dentalmeetagency";
 
 export const SITE_NAME = "DentalMeet";
 
