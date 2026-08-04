@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { ChevronRight } from "lucide-react";
 import { CALENDLY_URL } from "@/lib/constants";
 
 const navLinks = [
@@ -20,24 +21,56 @@ export default function Navbar() {
   }, []);
 
   useEffect(() => {
-    document.body.style.overflow = mobileOpen ? "hidden" : "";
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setMobileOpen(false);
+    };
+
+    const onPointerDown = (event: MouseEvent) => {
+      const target = event.target as Node | null;
+      const menu = document.getElementById("mobile-nav");
+      const toggle = document.getElementById("mobile-nav-toggle");
+
+      if (
+        menu?.contains(target) ||
+        toggle?.contains(target)
+      ) {
+        return;
+      }
+
+      setMobileOpen(false);
+    };
+
+    if (mobileOpen) {
+      document.addEventListener("keydown", onKeyDown);
+      document.addEventListener("mousedown", onPointerDown);
+    }
+
     return () => {
-      document.body.style.overflow = "";
+      document.removeEventListener("keydown", onKeyDown);
+      document.removeEventListener("mousedown", onPointerDown);
     };
   }, [mobileOpen]);
 
-  const handleNavClick = () => setMobileOpen(false);
+  const closeMenu = () => setMobileOpen(false);
+
+  const handleNavClick = () => {
+    closeMenu();
+  };
 
   return (
     <header
       className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
-        scrolled
-          ? "border-b border-gray-100 bg-white/90 shadow-sm backdrop-blur-md"
+        scrolled || mobileOpen
+          ? "border-b border-gray-100 bg-white/95 shadow-sm backdrop-blur-md"
           : "bg-white/80 backdrop-blur-sm"
       }`}
     >
-      <nav className="mx-auto flex max-w-7xl items-center justify-between px-5 py-4 sm:px-6 lg:px-8">
-        <a href="/" className="text-lg font-bold tracking-tight text-gray-900 sm:text-xl">
+      <nav className="relative mx-auto flex max-w-7xl items-center justify-between px-5 py-4 sm:px-6 lg:px-8">
+        <a
+          href="/"
+          className="text-lg font-bold tracking-tight text-gray-900 sm:text-xl"
+          onClick={closeMenu}
+        >
           DentalMeet
         </a>
 
@@ -66,11 +99,13 @@ export default function Navbar() {
         </div>
 
         <button
+          id="mobile-nav-toggle"
           type="button"
           className="relative z-50 flex h-10 w-10 items-center justify-center rounded-lg text-gray-700 transition-colors hover:bg-gray-100 md:hidden"
           onClick={() => setMobileOpen((prev) => !prev)}
           aria-label={mobileOpen ? "Close menu" : "Open menu"}
           aria-expanded={mobileOpen}
+          aria-controls="mobile-nav"
         >
           <span className="sr-only">{mobileOpen ? "Close" : "Menu"}</span>
           <div className="flex w-5 flex-col gap-1.5">
@@ -90,41 +125,54 @@ export default function Navbar() {
             />
           </div>
         </button>
-      </nav>
 
-      <AnimatePresence>
-        {mobileOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: -8 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -8 }}
-            transition={{ duration: 0.2 }}
-            className="fixed inset-0 top-[65px] z-40 bg-white md:hidden"
-          >
-            <div className="flex flex-col gap-1 px-5 py-8 sm:px-6">
-              {navLinks.map((link) => (
-                <a
-                  key={link.href}
-                  href={link.href}
-                  onClick={handleNavClick}
-                  className="rounded-xl px-4 py-3.5 text-lg font-medium text-gray-700 transition-colors hover:bg-gray-50 hover:text-gray-900"
-                >
-                  {link.label}
-                </a>
-              ))}
-              <a
-                href={CALENDLY_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={handleNavClick}
-                className="btn-primary mt-4 px-6 py-3.5 text-center text-base shadow-md"
-              >
-                Book a call
-              </a>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+        <AnimatePresence>
+          {mobileOpen && (
+            <motion.div
+              id="mobile-nav"
+              initial={{ opacity: 0, y: -8 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -8 }}
+              transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
+              className="absolute left-0 right-0 top-full z-50 mt-px border-b border-gray-200 bg-white shadow-lg md:hidden"
+            >
+              <div className="mx-auto max-w-7xl px-5 py-4 sm:px-6">
+                <p className="mb-3 text-xs font-semibold uppercase tracking-wider text-gray-400">
+                  Menu
+                </p>
+                <div className="flex flex-col gap-2">
+                  {navLinks.map((link) => (
+                    <a
+                      key={link.href}
+                      href={link.href}
+                      onClick={handleNavClick}
+                      className="group flex items-center justify-between rounded-xl border border-gray-200 bg-gray-50/80 px-4 py-3.5 text-base font-medium text-gray-900 shadow-sm transition-all hover:border-accent/30 hover:bg-accent-light active:scale-[0.99]"
+                    >
+                      {link.label}
+                      <ChevronRight
+                        className="h-4 w-4 text-gray-400 transition-transform group-hover:translate-x-0.5 group-hover:text-accent"
+                        strokeWidth={2}
+                        aria-hidden="true"
+                      />
+                    </a>
+                  ))}
+                </div>
+                <div className="mt-4 border-t border-gray-100 pt-4">
+                  <a
+                    href={CALENDLY_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={handleNavClick}
+                    className="btn-primary w-full px-6 py-3.5 text-center text-base shadow-md"
+                  >
+                    Book a call
+                  </a>
+                </div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </nav>
     </header>
   );
 }
