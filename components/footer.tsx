@@ -1,3 +1,9 @@
+import {
+  CONTACT_EMAIL_DISPLAY,
+  CONTACT_EMAIL_MAILTO,
+  LINKEDIN_URL,
+} from "@/lib/constants";
+
 export default function Footer() {
   return (
     <footer className="border-t border-gray-200 bg-gray-50">
@@ -8,13 +14,13 @@ export default function Footer() {
 
         <div className="flex flex-col items-center gap-4 sm:flex-row sm:gap-6">
           <a
-            href="mailto:hello@dentalmeet.com"
+            href={`mailto:${CONTACT_EMAIL_MAILTO}`}
             className="text-sm font-medium text-gray-600 transition-colors duration-200 hover:text-accent"
           >
-            hello@dentalmeet.com
+            {CONTACT_EMAIL_DISPLAY}
           </a>
           <a
-            href="https://linkedin.com/company/dentalmeet"
+            href={LINKEDIN_URL}
             target="_blank"
             rel="noopener noreferrer"
             aria-label="DentalMeet on LinkedIn"
