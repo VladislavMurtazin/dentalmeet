@@ -3,11 +3,11 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronRight } from "lucide-react";
-import { CALENDLY_URL } from "@/lib/constants";
+import { PILOT_CTA_LABEL, PILOT_PAGE_URL } from "@/lib/constants";
 
 const navLinks = [
-  { label: "How it works", href: "#how-it-works" },
-  { label: "Pricing", href: "#pilot-offer" },
+  { label: "How it works", href: "/#how-it-works" },
+  { label: "Pricing", href: "/#pilot-offer" },
 ];
 
 export default function Navbar() {
@@ -30,10 +30,7 @@ export default function Navbar() {
       const menu = document.getElementById("mobile-nav");
       const toggle = document.getElementById("mobile-nav-toggle");
 
-      if (
-        menu?.contains(target) ||
-        toggle?.contains(target)
-      ) {
+      if (menu?.contains(target) || toggle?.contains(target)) {
         return;
       }
 
@@ -52,10 +49,6 @@ export default function Navbar() {
   }, [mobileOpen]);
 
   const closeMenu = () => setMobileOpen(false);
-
-  const handleNavClick = () => {
-    closeMenu();
-  };
 
   return (
     <header
@@ -88,13 +81,8 @@ export default function Navbar() {
         </ul>
 
         <div className="hidden md:block">
-          <a
-            href={CALENDLY_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="btn-primary px-5 py-2.5 text-sm shadow-md"
-          >
-            Book a call
+          <a href={PILOT_PAGE_URL} className="btn-primary px-5 py-2.5 text-sm shadow-md">
+            {PILOT_CTA_LABEL}
           </a>
         </div>
 
@@ -145,7 +133,7 @@ export default function Navbar() {
                     <a
                       key={link.href}
                       href={link.href}
-                      onClick={handleNavClick}
+                      onClick={closeMenu}
                       className="group flex items-center justify-between rounded-xl border border-gray-200 bg-gray-50/80 px-4 py-3.5 text-base font-medium text-gray-900 shadow-sm transition-all hover:border-accent/30 hover:bg-accent-light active:scale-[0.99]"
                     >
                       {link.label}
@@ -159,13 +147,11 @@ export default function Navbar() {
                 </div>
                 <div className="mt-4 border-t border-gray-100 pt-4">
                   <a
-                    href={CALENDLY_URL}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    onClick={handleNavClick}
+                    href={PILOT_PAGE_URL}
+                    onClick={closeMenu}
                     className="btn-primary w-full px-6 py-3.5 text-center text-base shadow-md"
                   >
-                    Book a call
+                    {PILOT_CTA_LABEL}
                   </a>
                 </div>
               </div>
