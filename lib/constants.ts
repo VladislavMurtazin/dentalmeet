@@ -1,8 +1,16 @@
 export const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL ?? "https://dentalmeet.com";
 
+export const PILOT_PAGE_URL = "/pilot";
+
+export const BRIEF_FORM_URL =
+  process.env.NEXT_PUBLIC_BRIEF_FORM_URL ??
+  "https://docs.google.com/forms/d/e/1FAIpQLSd8yszQEOVfuvjP7G44P-t-YTZ4uK9-QXpry6a-eSXrE6TNjg/viewform?usp=header";
+
 export const CALENDLY_URL =
   "https://calendly.com/dentalmeet-agency/new-meeting";
+
+export const PILOT_CTA_LABEL = "I want a qualified meeting";
 
 export const CONTACT_EMAIL_DISPLAY = "hello@dentalmeet.agency";
 
@@ -19,3 +27,8 @@ export const SITE_TITLE =
 
 export const SITE_DESCRIPTION =
   "We book 15-20 qualified meetings with dental practices in 2-3 weeks. Performance-based pricing for agencies selling to dentists.";
+
+export const PILOT_PAGE_TITLE = "DentalMeet Pilot Program";
+
+export const PILOT_PAGE_DESCRIPTION =
+  "Autonomous B2B lead generation for dental marketing agencies. 15-20 qualified meetings in 2-3 weeks.";

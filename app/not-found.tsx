@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { CALENDLY_URL } from "@/lib/constants";
+import { PILOT_CTA_LABEL, PILOT_PAGE_URL } from "@/lib/constants";
 
 export default function NotFound() {
   return (
@@ -9,8 +9,8 @@ export default function NotFound() {
           <Link href="/" className="text-xl font-bold tracking-tight text-gray-900">
             DentalMeet
           </Link>
-          <Link href={CALENDLY_URL} className="btn-primary px-5 py-2.5 text-sm">
-            Book a call
+          <Link href={PILOT_PAGE_URL} className="btn-primary px-5 py-2.5 text-sm">
+            {PILOT_CTA_LABEL}
           </Link>
         </nav>
       </header>

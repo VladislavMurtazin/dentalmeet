@@ -1,7 +1,7 @@
 "use client";
 
 import FadeIn from "@/components/fade-in";
-import { CALENDLY_URL } from "@/lib/constants";
+import { PILOT_CTA_LABEL, PILOT_PAGE_URL } from "@/lib/constants";
 
 export default function Hero() {
   return (
@@ -14,17 +14,6 @@ export default function Hero() {
         <div className="absolute -top-32 left-1/2 h-[500px] w-[800px] -translate-x-1/2 rounded-full bg-accent/10 blur-3xl" />
         <div className="absolute top-1/3 -right-32 h-[400px] w-[400px] rounded-full bg-blue-200/30 blur-3xl" />
         <div className="absolute -bottom-20 -left-32 h-[350px] w-[350px] rounded-full bg-accent/5 blur-3xl" />
-        <svg
-          className="absolute top-20 left-1/2 -translate-x-1/2 opacity-[0.04]"
-          width="800"
-          height="400"
-          viewBox="0 0 800 400"
-          fill="none"
-        >
-          <ellipse cx="400" cy="200" rx="380" ry="180" stroke="#2563eb" strokeWidth="1" />
-          <ellipse cx="400" cy="200" rx="280" ry="130" stroke="#2563eb" strokeWidth="1" />
-          <ellipse cx="400" cy="200" rx="180" ry="80" stroke="#2563eb" strokeWidth="1" />
-        </svg>
       </div>
 
       <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
@@ -52,12 +41,10 @@ export default function Hero() {
           <FadeIn onMount delay={0.3}>
             <div className="mt-10 flex flex-col items-stretch justify-center gap-3 sm:mt-12 sm:flex-row sm:items-center sm:gap-4">
               <a
-                href={CALENDLY_URL}
-                target="_blank"
-                rel="noopener noreferrer"
+                href={PILOT_PAGE_URL}
                 className="btn-primary group w-full px-8 py-4 text-base sm:w-auto"
               >
-                Book a 15-min call
+                {PILOT_CTA_LABEL}
                 <svg
                   className="h-4 w-4 transition-transform group-hover:translate-x-0.5"
                   fill="none"
