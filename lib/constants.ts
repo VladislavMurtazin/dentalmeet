@@ -13,9 +13,13 @@ export const TERMS_PAGE_TITLE = "Terms of Service";
 
 export const LEGAL_LAST_UPDATED = "August 2026";
 
-export const PRIVACY_EMAIL = "privacy@dentalmeet.agency";
+export const CONTACT_EMAIL_DISPLAY = "hello@dentalmeet.agency";
 
-export const LEGAL_EMAIL = "legal@dentalmeet.agency";
+export const CONTACT_EMAIL_MAILTO = "dentalmeet.agency@gmail.com";
+
+export const PRIVACY_EMAIL = CONTACT_EMAIL_MAILTO;
+
+export const LEGAL_EMAIL = CONTACT_EMAIL_MAILTO;
 
 export const BRIEF_FORM_URL =
   process.env.NEXT_PUBLIC_BRIEF_FORM_URL ??
@@ -25,10 +29,6 @@ export const CALENDLY_URL =
   "https://calendly.com/dentalmeet-agency/new-meeting";
 
 export const PILOT_CTA_LABEL = "I want a qualified meeting";
-
-export const CONTACT_EMAIL_DISPLAY = "hello@dentalmeet.agency";
-
-export const CONTACT_EMAIL_MAILTO = "dentalmeet.agency@gmail.com";
 
 export const CONTACT_EMAIL_COMPOSE_URL = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(CONTACT_EMAIL_MAILTO)}&su=${encodeURIComponent("DentalMeet inquiry")}`;
 
