@@ -35,4 +35,44 @@
   .text-balance {
     text-wrap: balance;
   }
+
+  .legal-prose {
+    @apply text-base leading-[1.6] text-gray-700;
+  }
+
+  .legal-prose h2 {
+    @apply mt-10 text-xl font-semibold tracking-tight text-gray-900 first:mt-0;
+  }
+
+  .legal-prose h3 {
+    @apply mt-6 text-lg font-semibold text-gray-900;
+  }
+
+  .legal-prose p {
+    @apply mt-4;
+  }
+
+  .legal-prose ul {
+    @apply mt-4 list-disc space-y-2 pl-6;
+  }
+
+  .legal-prose li {
+    @apply leading-[1.6];
+  }
+
+  .legal-prose a {
+    @apply font-medium text-accent underline-offset-2 hover:underline;
+  }
+
+  .legal-prose strong {
+    @apply font-semibold text-gray-900;
+  }
+
+  .legal-prose hr {
+    @apply my-10 border-gray-200;
+  }
+
+  .legal-prose .legal-note {
+    @apply text-sm text-gray-600;
+  }
 }

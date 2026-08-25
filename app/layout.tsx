@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import CookieBanner from "@/components/cookie-banner";
 import {
   SITE_DESCRIPTION,
   SITE_NAME,
@@ -58,7 +59,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={inter.variable}>
-      <body className="font-sans">{children}</body>
+      <body className="font-sans">
+        {children}
+        <CookieBanner />
+      </body>
     </html>
   );
 }

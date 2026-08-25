@@ -1,7 +1,21 @@
 export const SITE_URL =
-  process.env.NEXT_PUBLIC_SITE_URL ?? "https://dentalmeet.com";
+  process.env.NEXT_PUBLIC_SITE_URL ?? "https://dentalmeet.agency";
 
 export const PILOT_PAGE_URL = "/pilot";
+
+export const PRIVACY_PAGE_URL = "/privacy";
+
+export const TERMS_PAGE_URL = "/terms";
+
+export const PRIVACY_PAGE_TITLE = "Privacy Policy";
+
+export const TERMS_PAGE_TITLE = "Terms of Service";
+
+export const LEGAL_LAST_UPDATED = "August 2026";
+
+export const PRIVACY_EMAIL = "privacy@dentalmeet.agency";
+
+export const LEGAL_EMAIL = "legal@dentalmeet.agency";
 
 export const BRIEF_FORM_URL =
   process.env.NEXT_PUBLIC_BRIEF_FORM_URL ??

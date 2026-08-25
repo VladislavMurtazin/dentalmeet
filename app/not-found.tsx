@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Footer from "@/components/footer";
 import { PILOT_CTA_LABEL, PILOT_PAGE_URL } from "@/lib/constants";
 
 export default function NotFound() {
@@ -34,6 +35,7 @@ export default function NotFound() {
           </Link>
         </div>
       </main>
+      <Footer />
     </div>
   );
 }
