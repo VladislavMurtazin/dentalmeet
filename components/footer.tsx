@@ -5,6 +5,7 @@ import {
   LINKEDIN_URL,
   PRIVACY_PAGE_URL,
   TERMS_PAGE_URL,
+  WORKSPACE_INFO_PAGE_URL,
 } from "@/lib/constants";
 
 export default function Footer() {
@@ -32,6 +33,15 @@ export default function Footer() {
                 className="font-medium transition-colors duration-200 hover:text-accent"
               >
                 Terms of Service
+              </Link>
+              <span className="text-gray-300" aria-hidden="true">
+                |
+              </span>
+              <Link
+                href={WORKSPACE_INFO_PAGE_URL}
+                className="font-medium transition-colors duration-200 hover:text-accent"
+              >
+                Workspace Access
               </Link>
               <span className="text-gray-300" aria-hidden="true">
                 |

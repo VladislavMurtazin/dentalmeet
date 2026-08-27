@@ -7,6 +7,8 @@ export const PRIVACY_PAGE_URL = "/privacy";
 
 export const TERMS_PAGE_URL = "/terms";
 
+export const WORKSPACE_INFO_PAGE_URL = "/workspace-info";
+
 export const PRIVACY_PAGE_TITLE = "Privacy Policy";
 
 export const TERMS_PAGE_TITLE = "Terms of Service";
