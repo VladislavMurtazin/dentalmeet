@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>DentalMeet CRM</title>
+  <style>
+    :root {
+      --bg: #0b1220;
+      --card: #1a2332;
+      --border: #2d3a4f;
+      --text: #e8eef7;
+      --muted: #8b9cb3;
+      --accent: #3b82f6;
+      --green: #22c55e;
+      --amber: #f59e0b;
+      --red: #ef4444;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      padding: 1.5rem 1rem 3rem;
+    }
+    .container { max-width: 1200px; margin: 0 auto; }
+    h1 { font-size: 1.6rem; margin-bottom: 0.25rem; }
+    .sub { color: var(--muted); margin-bottom: 1.5rem; font-size: 0.875rem; }
+    .grid { display: grid; gap: 0.75rem; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); margin-bottom: 1.5rem; }
+    .card {
+      background: var(--card);
+      border-radius: 10px;
+      padding: 1rem;
+      border: 1px solid var(--border);
+    }
+    .card h3 { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); margin-bottom: 0.35rem; }
+    .card .val { font-size: 1.5rem; font-weight: 700; }
+    .section { margin-bottom: 2rem; }
+    .section h2 { font-size: 1rem; margin-bottom: 0.75rem; color: var(--muted); }
+    .filters { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.75rem; }
+    .filters select, .filters input {
+      background: var(--card);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 0.4rem 0.6rem;
+      border-radius: 6px;
+      font-size: 0.85rem;
+    }
+    table { width: 100%; border-collapse: collapse; font-size: 0.85rem; background: var(--card); border-radius: 10px; overflow: hidden; border: 1px solid var(--border); }
+    th, td { text-align: left; padding: 0.55rem 0.75rem; border-bottom: 1px solid var(--border); }
+    th { color: var(--muted); font-weight: 500; font-size: 0.7rem; text-transform: uppercase; }
+    tr.lead-row { cursor: pointer; }
+    tr.lead-row:hover { background: #243044; }
+    tr.detail-row td { background: #121a28; font-size: 0.8rem; color: var(--muted); }
+    .badge {
+      display: inline-block;
+      padding: 0.15rem 0.45rem;
+      border-radius: 4px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+    .badge-new { background: #334155; color: #cbd5e1; }
+    .badge-contacted { background: #1e3a5f; color: #93c5fd; }
+    .badge-replied { background: #422006; color: #fcd34d; }
+    .badge-interested { background: #14532d; color: #86efac; }
+    .badge-client { background: #312e81; color: #c4b5fd; }
+    .client-card { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 1rem; margin-bottom: 0.75rem; }
+    .client-card h4 { font-size: 0.95rem; margin-bottom: 0.25rem; }
+    .client-meta { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 0.5rem; margin-top: 0.5rem; font-size: 0.8rem; color: var(--muted); }
+    .client-meta strong { color: var(--text); display: block; }
+    .ws-connected { color: var(--green); }
+    .ws-fallback { color: var(--amber); }
+    .err { background: #450a0a; color: #fecaca; padding: 1rem; border-radius: 8px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>DentalMeet CRM</h1>
+    <p class="sub" id="updated">Loading...</p>
+
+    <div class="section">
+      <h2>Overview</h2>
+      <div class="grid" id="overview"></div>
+    </div>
+
+    <div class="section">
+      <h2>Revenue</h2>
+      <div class="grid" id="revenue"></div>
+    </div>
+
+    <div class="section">
+      <h2>Client campaigns</h2>
+      <div id="clients"></div>
+    </div>
+
+    <div class="section">
+      <h2>Leads (Agencies)</h2>
+      <div class="filters">
+        <select id="f-status">
+          <option value="">All statuses</option>
+          <option value="new">New</option>
+          <option value="contacted">Contacted</option>
+          <option value="replied">Replied</option>
+          <option value="interested">Interested</option>
+          <option value="client">Client</option>
+        </select>
+        <select id="f-geo">
+          <option value="">All geo</option>
+        </select>
+        <input type="date" id="f-date" placeholder="Date added" />
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>Company</th>
+            <th>Email</th>
+            <th>Status</th>
+            <th>Last contact</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody id="leads-body"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <script>
+    const params = new URLSearchParams(location.search);
+    const token = params.get("token");
+    const jsonUrl = token ? `/crm.json?token=${encodeURIComponent(token)}` : "/crm.json";
+
+    function fmtMoney(n) {
+      return "$" + Number(n || 0).toLocaleString(undefined, { maximumFractionDigits: 0 });
+    }
+
+    function badge(status) {
+      return `<span class="badge badge-${status}">${status}</span>`;
+    }
+
+    function card(label, value) {
+      return `<div class="card"><h3>${label}</h3><div class="val">${value}</div></div>`;
+    }
+
+    let allLeads = [];
+
+    function renderLeads() {
+      const status = document.getElementById("f-status").value;
+      const geo = document.getElementById("f-geo").value;
+      const dateFrom = document.getElementById("f-date").value;
+      const body = document.getElementById("leads-body");
+      const filtered = allLeads.filter((l) => {
+        if (status && l.status !== status) return false;
+        if (geo && l.geo !== geo) return false;
+        if (dateFrom && l.date_added && l.date_added < dateFrom) return false;
+        return true;
+      });
+      body.innerHTML = filtered.slice(0, 200).map((l, i) => {
+        const notes = (l.notes || "").slice(0, 60);
+        return `
+          <tr class="lead-row" data-idx="${i}">
+            <td>${l.company || "—"}</td>
+            <td>${l.email}</td>
+            <td>${badge(l.status)}</td>
+            <td>${(l.last_contact || "—").slice(0, 30)}</td>
+            <td>${notes}${l.notes && l.notes.length > 60 ? "…" : ""}</td>
+          </tr>
+          <tr class="detail-row" id="detail-${i}" style="display:none">
+            <td colspan="5">
+              <strong>Geo:</strong> ${l.geo || "—"} ·
+              <strong>Added:</strong> ${l.date_added || "—"} ·
+              <strong>Reply type:</strong> ${l.reply_type || "—"}<br/>
+              ${l.notes || "No notes"}
+            </td>
+          </tr>`;
+      }).join("");
+
+      body.querySelectorAll(".lead-row").forEach((row) => {
+        row.addEventListener("click", () => {
+          const idx = row.dataset.idx;
+          const det = document.getElementById("detail-" + idx);
+          det.style.display = det.style.display === "none" ? "" : "none";
+        });
+      });
+    }
+
+    async function load() {
+      try {
+        const res = await fetch(jsonUrl, { credentials: "same-origin" });
+        if (!res.ok) throw new Error(await res.text());
+        const data = await res.json();
+        document.getElementById("updated").textContent =
+          "Updated: " + (data.updated_at || "unknown") + " · refreshes hourly";
+
+        const o = data.overview || {};
+        document.getElementById("overview").innerHTML = [
+          card("Total leads", o.total_leads ?? "—"),
+          card("Contacted", o.leads_contacted ?? "—"),
+          card("Replies", o.replies ?? "—"),
+          card("Interested", o.interested ?? "—"),
+          card("Clients", o.clients ?? "—"),
+          card("Monthly revenue", fmtMoney(o.monthly_revenue)),
+        ].join("");
+
+        const r = data.revenue || {};
+        document.getElementById("revenue").innerHTML = [
+          card("Monthly recurring", fmtMoney(r.monthly_recurring)),
+          card("Pending invoices", fmtMoney(r.pending_invoices)),
+          card("Paid this month", fmtMoney(r.paid_this_month)),
+        ].join("");
+
+        document.getElementById("clients").innerHTML = (data.clients || []).map((c) => {
+          const ws = (c.workspace_status || "").toLowerCase();
+          const wsClass = ws === "connected" ? "ws-connected" : "ws-fallback";
+          return `<div class="client-card">
+            <h4>${c.name || c.company} <span class="${wsClass}">(${c.workspace_status || "unknown"})</span></h4>
+            <div class="client-meta">
+              <div><strong>Company</strong>${c.company || "—"}</div>
+              <div><strong>Meetings (month)</strong>${c.meetings_this_month ?? 0}</div>
+              <div><strong>Revenue</strong>${fmtMoney(c.revenue_generated)}</div>
+              <div><strong>Next invoice</strong>${c.next_invoice_date || "—"}</div>
+              <div><strong>Payment</strong>${c.payment_status || "—"}</div>
+            </div>
+          </div>`;
+        }).join("") || "<p class='sub'>No active clients</p>";
+
+        allLeads = data.leads || [];
+        const geos = [...new Set(allLeads.map((l) => l.geo).filter(Boolean))].sort();
+        const geoSel = document.getElementById("f-geo");
+        geos.forEach((g) => {
+          const opt = document.createElement("option");
+          opt.value = g;
+          opt.textContent = g;
+          geoSel.appendChild(opt);
+        });
+        renderLeads();
+      } catch (e) {
+        document.getElementById("updated").innerHTML =
+          `<span class="err">Failed to load CRM: ${e.message}</span>`;
+      }
+    }
+
+    ["f-status", "f-geo", "f-date"].forEach((id) => {
+      document.getElementById(id).addEventListener("change", renderLeads);
+    });
+    load();
+    setInterval(load, 3600000);
+  </script>
+</body>
+</html>

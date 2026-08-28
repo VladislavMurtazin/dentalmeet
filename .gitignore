@@ -31,5 +31,6 @@ yarn-error.log*
 
 # generated analytics (pipeline export)
 /public/analytics.json
+/public/crm.json
 *.tsbuildinfo
 next-env.d.ts
