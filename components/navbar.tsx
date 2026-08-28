@@ -7,6 +7,7 @@ import { PILOT_CTA_LABEL, PILOT_PAGE_URL } from "@/lib/constants";
 
 const navLinks = [
   { label: "How it works", href: "/#how-it-works" },
+  { label: "Case studies", href: "/case-studies" },
   { label: "Pricing", href: "/#pilot-offer" },
 ];
 
