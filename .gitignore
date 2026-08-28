@@ -29,6 +29,7 @@ yarn-error.log*
 # vercel
 .vercel
 
-# typescript
+# generated analytics (pipeline export)
+/public/analytics.json
 *.tsbuildinfo
 next-env.d.ts

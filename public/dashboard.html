@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>DentalMeet Analytics Dashboard</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --card: #1e293b;
+      --text: #f1f5f9;
+      --muted: #94a3b8;
+      --accent: #2563eb;
+      --green: #22c55e;
+      --red: #ef4444;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      padding: 2rem 1rem;
+    }
+    .container { max-width: 1100px; margin: 0 auto; }
+    h1 { font-size: 1.75rem; margin-bottom: 0.25rem; }
+    .sub { color: var(--muted); margin-bottom: 2rem; font-size: 0.9rem; }
+    .grid { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); margin-bottom: 2rem; }
+    .card {
+      background: var(--card);
+      border-radius: 12px;
+      padding: 1.25rem;
+      border: 1px solid #334155;
+    }
+    .card h3 { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); margin-bottom: 0.5rem; }
+    .card .val { font-size: 1.75rem; font-weight: 700; }
+    .card .subval { font-size: 0.85rem; color: var(--muted); margin-top: 0.25rem; }
+    .section { margin-bottom: 2rem; }
+    .section h2 { font-size: 1.1rem; margin-bottom: 1rem; color: var(--muted); }
+    .charts { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+    .chart-card { background: var(--card); border-radius: 12px; padding: 1rem; border: 1px solid #334155; }
+    table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+    th, td { text-align: left; padding: 0.6rem 0.75rem; border-bottom: 1px solid #334155; }
+    th { color: var(--muted); font-weight: 500; font-size: 0.75rem; text-transform: uppercase; }
+    .good { color: var(--green); }
+    .bad { color: var(--red); }
+    .err { background: #450a0a; color: #fecaca; padding: 1rem; border-radius: 8px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>DentalMeet Analytics</h1>
+    <p class="sub" id="updated">Loading...</p>
+
+    <div class="section">
+      <h2>Today</h2>
+      <div class="grid" id="today-cards"></div>
+    </div>
+
+    <div class="section">
+      <h2>Week &amp; Month</h2>
+      <div class="grid" id="period-cards"></div>
+    </div>
+
+    <div class="section">
+      <h2>Trends (30 days)</h2>
+      <div class="charts">
+        <div class="chart-card"><canvas id="sentChart"></canvas></div>
+        <div class="chart-card"><canvas id="openChart"></canvas></div>
+        <div class="chart-card"><canvas id="replyChart"></canvas></div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Templates (30 days)</h2>
+      <div class="charts">
+        <div class="chart-card">
+          <h3 style="margin-bottom:0.75rem;color:var(--green)">Top 5</h3>
+          <table id="top-table"><thead><tr><th>Template</th><th>Sent</th><th>Open</th><th>Reply</th></tr></thead><tbody></tbody></table>
+        </div>
+        <div class="chart-card">
+          <h3 style="margin-bottom:0.75rem;color:var(--red)">Bottom 5 (investigate)</h3>
+          <table id="bottom-table"><thead><tr><th>Template</th><th>Sent</th><th>Open</th><th>Reply</th></tr></thead><tbody></tbody></table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const fmt = (n) => (n == null ? "—" : n);
+    const pct = (n) => (n == null ? "—" : n + "%");
+
+    function card(title, value, sub) {
+      return `<div class="card"><h3>${title}</h3><div class="val">${value}</div>${sub ? `<div class="subval">${sub}</div>` : ""}</div>`;
+    }
+
+    function fillTable(id, rows) {
+      const tbody = document.querySelector(`#${id} tbody`);
+      tbody.innerHTML = rows.map(r => `
+        <tr>
+          <td>${r.template}</td>
+          <td>${fmt(r.emails_sent)}</td>
+          <td>${pct(r.open_rate)}</td>
+          <td>${pct(r.reply_rate)}</td>
+        </tr>`).join("") || "<tr><td colspan='4'>No data</td></tr>";
+    }
+
+    function lineChart(id, label, data, color) {
+      const ctx = document.getElementById(id);
+      new Chart(ctx, {
+        type: "line",
+        data: {
+          labels: data.map(d => d.date?.slice(5) || ""),
+          datasets: [{
+            label,
+            data: data.map(d => d.value),
+            borderColor: color,
+            backgroundColor: color + "33",
+            tension: 0.3,
+            fill: true,
+          }],
+        },
+        options: {
+          responsive: true,
+          plugins: { legend: { labels: { color: "#94a3b8" } } },
+          scales: {
+            x: { ticks: { color: "#64748b" }, grid: { color: "#334155" } },
+            y: { ticks: { color: "#64748b" }, grid: { color: "#334155" } },
+          },
+        },
+      });
+    }
+
+    fetch("/analytics.json")
+      .then(r => { if (!r.ok) throw new Error("analytics.json not found"); return r.json(); })
+      .then(data => {
+        const t = data.today || {};
+        document.getElementById("updated").textContent =
+          "Updated: " + (data.updated_at || "unknown");
+
+        document.getElementById("today-cards").innerHTML = [
+          card("Sent", fmt(t.emails_sent), ""),
+          card("Opened", fmt(t.emails_opened), pct(t.open_rate) + " open rate"),
+          card("Replied", fmt(t.emails_replied), pct(t.reply_rate) + " reply rate"),
+          card("Interested", fmt(t.replies_interested), ""),
+          card("Bounces", fmt(t.bounces), pct(t.bounce_rate)),
+          card("Meetings", fmt(t.meetings_booked), ""),
+        ].join("");
+
+        const w = data.week || {};
+        const m = data.month || {};
+        document.getElementById("period-cards").innerHTML = [
+          card("Week sent", fmt(w.emails_sent), pct(w.reply_rate) + " reply"),
+          card("Week interested", fmt(w.replies_interested), ""),
+          card("Month sent", fmt(m.emails_sent), pct(m.open_rate) + " open"),
+          card("Month replied", fmt(m.emails_replied), pct(m.reply_rate) + " reply"),
+        ].join("");
+
+        const series = (data.trends && data.trends.series) || [];
+        lineChart("sentChart", "Emails sent", series.map(d => ({ date: d.date, value: d.emails_sent })), "#2563eb");
+        lineChart("openChart", "Open rate %", series.map(d => ({ date: d.date, value: d.open_rate })), "#22c55e");
+        lineChart("replyChart", "Reply rate %", series.map(d => ({ date: d.date, value: d.reply_rate })), "#a855f7");
+
+        fillTable("top-table", data.top_templates || []);
+        fillTable("bottom-table", data.bottom_templates || []);
+      })
+      .catch(err => {
+        document.querySelector(".container").innerHTML +=
+          `<div class="err">Failed to load dashboard: ${err.message}</div>`;
+      });
+  </script>
+</body>
+</html>
