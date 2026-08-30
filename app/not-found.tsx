@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Footer from "@/components/footer";
-import { BRIEF_FORM_URL, PILOT_CTA_LABEL } from "@/lib/constants";
+import { BRIEF_FORM_URL, PILOT_CTA_LABEL, PRESENTATION_URL } from "@/lib/constants";
 
 export default function NotFound() {
   return (
@@ -35,9 +35,14 @@ export default function NotFound() {
           <Link href="/" className="btn-primary px-8 py-4 text-base">
             Back to home
           </Link>
-          <Link href="/#how-it-works" className="btn-secondary px-8 py-4 text-base">
-            See how it works
-          </Link>
+          <a
+            href={PRESENTATION_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn-secondary px-8 py-4 text-base"
+          >
+            See How It Works
+          </a>
         </div>
       </main>
       <Footer />
