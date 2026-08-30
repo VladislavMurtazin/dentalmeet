@@ -15,14 +15,32 @@ export async function GET(req: NextRequest) {
   if (!existsSync(path)) {
     return NextResponse.json(
       {
-        error: "CRM data not exported yet. Run: python -m pipeline.crm_export export",
+        error: null,
         updated_at: null,
-        overview: {},
+        overview: {
+          total_leads: 0,
+          active_clients: 0,
+          emails_sent_month: 0,
+          meetings_booked_month: 0,
+          revenue_this_month: 0,
+          monthly_revenue: 0,
+        },
         leads: [],
         clients: [],
+        campaigns: [],
+        analytics: { trends: { series: [] }, top_templates: [] },
+        alerts: { recent: [], account_health: [] },
+        payments: {
+          pending_invoices: [],
+          received_payments: [],
+          pending_total: 0,
+          revenue_this_month: 0,
+          revenue_all_time: 0,
+        },
         revenue: {},
+        note: "CRM snapshot missing — run: python -m pipeline.crm_export export",
       },
-      { status: 503 },
+      { status: 200 },
     );
   }
 
