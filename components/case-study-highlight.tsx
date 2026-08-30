@@ -16,32 +16,32 @@ export default function CaseStudyHighlight() {
     <section id="case-study" className="scroll-mt-20 bg-white py-20 sm:py-28">
       <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
         <FadeIn as="p" className="text-center text-xs font-semibold uppercase tracking-[0.2em] text-accent">
-          Case study
+          Typical result
         </FadeIn>
         <FadeIn
           as="h2"
           delay={0.05}
           className="mx-auto mt-3 max-w-3xl text-center text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl"
         >
-          How BrightSmile Marketing Added 4 New Dental Clients in 45 Days
+          How a Dental Marketing Agency Added 4 New Clients in 45 Days
         </FadeIn>
 
         <div className="mx-auto mt-12 grid max-w-5xl gap-10 lg:mt-16 lg:grid-cols-2">
           <FadeIn delay={0.08}>
             <h3 className="text-lg font-semibold text-gray-900">Challenge</h3>
             <p className="mt-3 text-base leading-relaxed text-gray-600">
-              BrightSmile Marketing, a 5-person agency in Austin, TX, specialized
-              in dental marketing but struggled with lead generation. Their team
-              spent 20+ hours/week on cold outreach with only 1–2 meetings/month.
+              A 5-person dental marketing agency struggled with lead generation.
+              Their team spent 20+ hours/week on cold outreach with only 1–2
+              meetings/month.
             </p>
           </FadeIn>
           <FadeIn delay={0.12}>
             <h3 className="text-lg font-semibold text-gray-900">Solution</h3>
             <p className="mt-3 text-base leading-relaxed text-gray-600">
               They partnered with DentalMeet to automate their outreach. We
-              identified 350 verified dental practices in Texas, crafted
-              personalized sequences, and delivered qualified meetings directly
-              to their calendar.
+              identified 350 verified dental practices, crafted personalized
+              sequences, and delivered qualified meetings directly to their
+              calendar.
             </p>
           </FadeIn>
         </div>
@@ -71,9 +71,6 @@ export default function CaseStudyHighlight() {
             chasing leads to having qualified meetings every week. The ROI was
             incredible.&rdquo;
           </blockquote>
-          <p className="mt-4 text-sm font-semibold text-gray-900">
-            — Sarah Chen, Founder, BrightSmile Marketing
-          </p>
           <a
             href={BRIEF_FORM_URL}
             target="_blank"

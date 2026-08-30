@@ -55,7 +55,9 @@ export default function CaseStudiesContent({
                     <p className="mt-1 text-sm text-gray-500">{cs.location}</p>
                     <p className="mt-4 text-xl font-bold text-gray-900">
                       {cs.key_metric ||
-                        `${cs.meetings_booked ?? "—"} meetings booked`}
+                        (cs.clients_acquired != null
+                          ? `${cs.clients_acquired} new clients`
+                          : `${cs.meetings_booked ?? "—"} meetings booked`)}
                     </p>
                     {cs.quote ? (
                       <p className="mt-3 line-clamp-3 text-sm italic text-gray-600">

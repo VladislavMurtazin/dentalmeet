@@ -3,18 +3,26 @@ import { join } from "path";
 
 export interface CaseStudy {
   id: string;
+  slug?: string;
   industry: string;
   location: string;
   duration?: string;
   meetings_booked?: number;
   emails_sent?: number;
+  clients_acquired?: number;
   reply_rate?: string;
   meeting_conversion?: string;
   revenue_generated?: string;
+  roi?: number;
   quote?: string | null;
   prose?: string;
   company?: string | null;
+  agency_name?: string | null;
+  owner_name?: string | null;
+  title?: string | null;
   key_metric?: string;
+  url?: string;
+  markdown?: string;
 }
 
 export interface CaseStudiesData {
@@ -49,4 +57,9 @@ export function loadCaseStudies(): CaseStudiesData {
   } catch {
     return FALLBACK_CASE_STUDIES;
   }
+}
+
+export function getCaseStudyBySlug(slug: string): CaseStudy | undefined {
+  const data = loadCaseStudies();
+  return data.case_studies.find((cs) => cs.slug === slug || cs.id === slug);
 }
