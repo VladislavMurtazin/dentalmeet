@@ -2,7 +2,7 @@
 
 import FadeIn from "@/components/fade-in";
 import { Check, Clock } from "lucide-react";
-import { PILOT_CTA_LABEL, PILOT_PAGE_URL } from "@/lib/constants";
+import { BRIEF_FORM_URL, PILOT_CTA_LABEL } from "@/lib/constants";
 
 const pricingRows = [
   { label: "Upfront", pilot: "$0", repeat: "$300 (or $1,000 flat / 7 meetings)" },
@@ -82,7 +82,9 @@ export default function PilotOffer() {
 
               <div className="mt-10 sm:mt-14">
                 <a
-                  href={PILOT_PAGE_URL}
+                  href={BRIEF_FORM_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="btn-primary group inline-flex w-full px-8 py-4 text-base shadow-xl shadow-accent/35 sm:w-auto sm:px-10 sm:py-5 sm:text-lg"
                 >
                   {PILOT_CTA_LABEL}

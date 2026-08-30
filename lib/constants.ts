@@ -23,14 +23,23 @@ export const PRIVACY_EMAIL = CONTACT_EMAIL_MAILTO;
 
 export const LEGAL_EMAIL = CONTACT_EMAIL_MAILTO;
 
+/** Onboarding / Get Started form */
 export const BRIEF_FORM_URL =
   process.env.NEXT_PUBLIC_BRIEF_FORM_URL ??
-  "https://docs.google.com/forms/d/e/1FAIpQLSd8yszQEOVfuvjP7G44P-t-YTZ4uK9-QXpry6a-eSXrE6TNjg/viewform?usp=header";
+  "https://docs.google.com/forms/d/1-_DIAdCf2sqlhcwnUWsAYYKfAb2ibUddOhKwUCA5W_k/viewform";
+
+/** Canva / presentation — “See How It Works” */
+export const PRESENTATION_URL =
+  process.env.NEXT_PUBLIC_PRESENTATION_URL ??
+  "https://canva.link/n4hed1htcuepmq5";
 
 export const CALENDLY_URL =
   "https://calendly.com/dentalmeet-agency/new-meeting";
 
-export const PILOT_CTA_LABEL = "I want a qualified meeting";
+/** Used for ROI calculator cost assumption */
+export const MEETING_PRICE_USD = 150;
+
+export const PILOT_CTA_LABEL = "Get Started";
 
 export const CONTACT_EMAIL_COMPOSE_URL = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(CONTACT_EMAIL_MAILTO)}&su=${encodeURIComponent("DentalMeet inquiry")}`;
 
@@ -39,12 +48,12 @@ export const LINKEDIN_URL = "https://www.linkedin.com/in/dentalmeetagency";
 export const SITE_NAME = "DentalMeet";
 
 export const SITE_TITLE =
-  "DentalMeet — Autonomous B2B Lead Generation for Dental Agencies";
+  "DentalMeet — Qualified Meetings with Dental Practices";
 
 export const SITE_DESCRIPTION =
-  "We book 15-20 qualified meetings with dental practices in 2-3 weeks. Performance-based pricing for agencies selling to dentists.";
+  "We connect marketing agencies with ready-to-buy dental practices. Pay only for meetings that actually happen.";
 
 export const PILOT_PAGE_TITLE = "DentalMeet Pilot Program";
 
 export const PILOT_PAGE_DESCRIPTION =
-  "Autonomous B2B lead generation for dental marketing agencies. 15-20 qualified meetings in 2-3 weeks.";
+  "Autonomous B2B lead generation for dental marketing agencies. Qualified meetings in 2-3 weeks.";

@@ -4,27 +4,53 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Plus, Minus } from "lucide-react";
 import FadeIn from "@/components/fade-in";
+import {
+  BRIEF_FORM_URL,
+  WORKSPACE_INFO_PAGE_URL,
+} from "@/lib/constants";
 
 const faqs = [
   {
-    question: "How is this different from buying a lead list?",
+    question: "How do you find dental practices?",
     answer:
-      "We don't sell lists. We run the entire outbound campaign — research, personalization, sending, follow-up, and meeting booking. You just show up to the calls.",
+      "We use verified B2B databases and targeted search to find dental practices matching your service area and specialty. Every contact is verified before outreach.",
   },
   {
-    question: "What if I don't get any meetings?",
+    question: "What if a meeting doesn't happen?",
     answer:
-      "You only pay for booked meetings. If we don't deliver, you don't pay. Simple.",
+      "You only pay for meetings that actually occur. If a practice cancels or doesn't show up, you're not charged. We also offer a free replacement meeting.",
   },
   {
-    question: "Do I need to provide my own email domain?",
-    answer:
-      "Yes, you connect your Google Workspace via OAuth. We handle warmup, rotation, and compliance. This keeps deliverability high and protects your main domain.",
+    question: "Is it safe to connect my Google Workspace?",
+    answer: (
+      <>
+        Yes. We only request permission to send emails and read replies related
+        to this campaign. We never access your files, documents, or personal
+        emails. You can revoke access anytime. Learn more on our{" "}
+        <a
+          href={WORKSPACE_INFO_PAGE_URL}
+          className="font-semibold text-accent underline-offset-2 hover:underline"
+        >
+          Workspace Info
+        </a>{" "}
+        page.
+      </>
+    ),
   },
   {
-    question: "How long until I see results?",
+    question: "Can I cancel anytime?",
     answer:
-      "First meetings typically book within 7–10 days. Full pilot runs 2–3 weeks.",
+      "Yes, no contracts. Cancel with 30 days notice and keep all meetings already booked.",
+  },
+  {
+    question: "How fast will I see results?",
+    answer:
+      "Most agencies see their first meetings within 2–3 weeks. Full campaign results typically arrive within 30–45 days.",
+  },
+  {
+    question: "What if I don't want to connect my Workspace?",
+    answer:
+      "No problem! We can send emails from our accounts on your behalf, signed with your name and company. Just choose this option in the form.",
   },
 ];
 
@@ -47,7 +73,7 @@ export default function FAQ() {
             const isOpen = openIndex === index;
 
             return (
-              <FadeIn key={faq.question} delay={index * 0.06}>
+              <FadeIn key={faq.question} delay={index * 0.05}>
                 <div className="overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm transition-shadow duration-200 hover:shadow-md">
                   <button
                     type="button"
@@ -62,7 +88,7 @@ export default function FAQ() {
                       className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full transition-all duration-200 ${
                         isOpen
                           ? "bg-accent text-white"
-                          : "bg-gray-100 text-gray-600 group-hover:bg-gray-200"
+                          : "bg-gray-100 text-gray-600"
                       }`}
                     >
                       {isOpen ? (
@@ -82,9 +108,9 @@ export default function FAQ() {
                         transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
                         className="overflow-hidden"
                       >
-                        <p className="border-t border-gray-100 px-5 pb-4 pt-1 text-sm leading-relaxed text-gray-600 sm:px-7 sm:pb-5 sm:text-base">
+                        <div className="border-t border-gray-100 px-5 pb-4 pt-1 text-sm leading-relaxed text-gray-600 sm:px-7 sm:pb-5 sm:text-base">
                           {faq.answer}
-                        </p>
+                        </div>
                       </motion.div>
                     )}
                   </AnimatePresence>
@@ -93,6 +119,20 @@ export default function FAQ() {
             );
           })}
         </div>
+
+        <FadeIn delay={0.2} className="mt-12 text-center sm:mt-14">
+          <p className="text-lg font-semibold text-gray-900 sm:text-xl">
+            Ready to Grow?
+          </p>
+          <a
+            href={BRIEF_FORM_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn-primary mt-5 px-8 py-3.5 text-base"
+          >
+            Get Started
+          </a>
+        </FadeIn>
       </div>
     </section>
   );

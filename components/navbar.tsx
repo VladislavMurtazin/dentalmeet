@@ -3,12 +3,17 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronRight } from "lucide-react";
-import { PILOT_CTA_LABEL, PILOT_PAGE_URL } from "@/lib/constants";
+import {
+  BRIEF_FORM_URL,
+  PILOT_CTA_LABEL,
+  PRESENTATION_URL,
+} from "@/lib/constants";
 
 const navLinks = [
   { label: "How it works", href: "/#how-it-works" },
-  { label: "Case studies", href: "/case-studies" },
-  { label: "Pricing", href: "/#pilot-offer" },
+  { label: "ROI", href: "/#roi" },
+  { label: "Case study", href: "/#case-study" },
+  { label: "FAQ", href: "/#faq" },
 ];
 
 export default function Navbar() {
@@ -68,7 +73,7 @@ export default function Navbar() {
           DentalMeet
         </a>
 
-        <ul className="hidden items-center gap-8 md:flex">
+        <ul className="hidden items-center gap-7 lg:flex">
           {navLinks.map((link) => (
             <li key={link.href}>
               <a
@@ -81,8 +86,21 @@ export default function Navbar() {
           ))}
         </ul>
 
-        <div className="hidden md:block">
-          <a href={PILOT_PAGE_URL} className="btn-primary px-5 py-2.5 text-sm shadow-md">
+        <div className="hidden items-center gap-3 md:flex">
+          <a
+            href={PRESENTATION_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hidden text-sm font-medium text-gray-600 transition-colors hover:text-gray-900 lg:inline"
+          >
+            View Presentation
+          </a>
+          <a
+            href={BRIEF_FORM_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn-primary px-5 py-2.5 text-sm shadow-md"
+          >
             {PILOT_CTA_LABEL}
           </a>
         </div>
@@ -148,7 +166,9 @@ export default function Navbar() {
                 </div>
                 <div className="mt-4 border-t border-gray-100 pt-4">
                   <a
-                    href={PILOT_PAGE_URL}
+                    href={BRIEF_FORM_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     onClick={closeMenu}
                     className="btn-primary w-full px-6 py-3.5 text-center text-base shadow-md"
                   >

@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Footer from "@/components/footer";
-import { PILOT_CTA_LABEL, PILOT_PAGE_URL } from "@/lib/constants";
+import { BRIEF_FORM_URL, PILOT_CTA_LABEL } from "@/lib/constants";
 
 export default function NotFound() {
   return (
@@ -10,9 +10,14 @@ export default function NotFound() {
           <Link href="/" className="text-xl font-bold tracking-tight text-gray-900">
             DentalMeet
           </Link>
-          <Link href={PILOT_PAGE_URL} className="btn-primary px-5 py-2.5 text-sm">
+          <a
+            href={BRIEF_FORM_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn-primary px-5 py-2.5 text-sm"
+          >
             {PILOT_CTA_LABEL}
-          </Link>
+          </a>
         </nav>
       </header>
 
