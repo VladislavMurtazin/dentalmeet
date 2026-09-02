@@ -63,6 +63,10 @@ const faqs = [
     a: "First meetings in 7–10 days. Full pilot: 2–3 weeks.",
   },
   {
+    q: "How do I pay?",
+    a: "Invoices are in USD and settled in USDT (TRC20). We send the wallet address with each invoice. Card/ACH is not available yet.",
+  },
+  {
     q: "Do I need my own email domain?",
     a: "Yes, you connect your Google Workspace via OAuth.",
   },
@@ -196,7 +200,18 @@ export default function PilotContent() {
                     <Check className="h-5 w-5 shrink-0 text-accent" />
                     <span>If we don&apos;t deliver 5 meetings, you pay nothing</span>
                   </li>
+                  <li className="flex gap-2">
+                    <Check className="h-5 w-5 shrink-0 text-accent" />
+                    <span>
+                      <strong>Payment:</strong> USDT (TRC20). USD pricing; crypto
+                      invoice after qualified meetings
+                    </span>
+                  </li>
                 </ul>
+                <p className="mt-4 text-sm text-gray-500">
+                  Card and bank transfer are not available yet. Wallet address is
+                  included on each invoice before you pay.
+                </p>
                 <div className="mt-8 border-t border-gray-100 pt-6">
                   <p className="font-semibold text-gray-900">What counts as a qualified meeting:</p>
                   <ul className="mt-4 space-y-2">

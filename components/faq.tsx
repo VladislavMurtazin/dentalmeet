@@ -48,6 +48,11 @@ const faqs = [
       "Most agencies see their first meetings within 2–3 weeks. Full campaign results typically arrive within 30–45 days.",
   },
   {
+    question: "How do I pay?",
+    answer:
+      "Pricing is in USD. Invoices are paid in USDT on the TRON network (TRC20). We include the wallet address on each invoice before any transfer. Card and ACH are not available yet.",
+  },
+  {
     question: "What if I don't want to connect my Workspace?",
     answer:
       "No problem! We can send emails from our accounts on your behalf, signed with your name and company. Just choose this option in the form.",

@@ -8,7 +8,8 @@ const pricingRows = [
   { label: "Upfront", pilot: "$0", repeat: "$300 (or $1,000 flat / 7 meetings)" },
   { label: "Per meeting", pilot: "$150", repeat: "$150" },
   { label: "Cap", pilot: "$750", repeat: "—" },
-  { label: "When", pilot: "Setup before launch", repeat: "After pilot" },
+  { label: "Payment", pilot: "USDT (TRC20)", repeat: "USDT (TRC20)" },
+  { label: "When", pilot: "Invoiced after qualified meetings", repeat: "After pilot" },
 ];
 
 export default function PilotOffer() {
@@ -68,6 +69,7 @@ export default function PilotOffer() {
                   "If we don't deliver 5 meetings, you pay nothing",
                   "Weekly transparency reports every Monday",
                   "Case-study pricing locked for 6 months if you continue",
+                  "Invoices settled in USDT (TRC20) — wallet sent with each invoice",
                 ].map((item) => (
                   <li key={item} className="flex items-start gap-3">
                     <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-accent text-white">
@@ -79,6 +81,12 @@ export default function PilotOffer() {
                   </li>
                 ))}
               </ul>
+
+              <p className="mx-auto mt-6 max-w-xl text-sm text-gray-500">
+                Pricing is in USD. Payment is via USDT on the TRON network (TRC20).
+                Card/ACH is not available yet — we&apos;ll confirm the wallet address
+                on your invoice before any transfer.
+              </p>
 
               <div className="mt-10 sm:mt-14">
                 <a

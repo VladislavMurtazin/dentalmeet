@@ -4,10 +4,10 @@ import FadeIn from "@/components/fade-in";
 import { BRIEF_FORM_URL } from "@/lib/constants";
 
 const METRICS = [
-  { value: "350", label: "dental practices contacted" },
+  { value: "200", label: "dental practices contacted" },
   { value: "12", label: "qualified meetings booked" },
-  { value: "4", label: "new clients signed" },
-  { value: "$18,000", label: "in new annual revenue" },
+  { value: "3", label: "new clients signed" },
+  { value: "$4,500", label: "in new annual revenue" },
   { value: "6x", label: "ROI in first 45 days" },
 ];
 
@@ -23,15 +23,15 @@ export default function CaseStudyHighlight() {
           delay={0.05}
           className="mx-auto mt-3 max-w-3xl text-center text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl"
         >
-          How a Dental Marketing Agency Added 4 New Clients in 45 Days
+          How a Dental Marketing Agency Added 3 New Clients in 45 Days
         </FadeIn>
 
         <div className="mx-auto mt-12 grid max-w-5xl gap-10 lg:mt-16 lg:grid-cols-2">
           <FadeIn delay={0.08}>
             <h3 className="text-lg font-semibold text-gray-900">Challenge</h3>
             <p className="mt-3 text-base leading-relaxed text-gray-600">
-              A 5-person dental marketing agency struggled with lead generation.
-              Their team spent 20+ hours/week on cold outreach with only 1–2
+              A 5–10 person dental marketing agency struggled with lead generation.
+              Their team spent 10 hours/week on cold outreach with only 1–2
               meetings/month.
             </p>
           </FadeIn>
@@ -39,7 +39,7 @@ export default function CaseStudyHighlight() {
             <h3 className="text-lg font-semibold text-gray-900">Solution</h3>
             <p className="mt-3 text-base leading-relaxed text-gray-600">
               They partnered with DentalMeet to automate their outreach. We
-              identified 350 verified dental practices, crafted personalized
+              identified 200 verified dental practices, crafted personalized
               sequences, and delivered qualified meetings directly to their
               calendar.
             </p>
